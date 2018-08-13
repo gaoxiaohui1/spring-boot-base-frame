@@ -2,7 +2,7 @@
   {
     "dbSource": "order_Read",
     "dbType": "sqlserver",
-    "dbAddr": "127.0.0.1",
+    "dbAddr": "localhost",
     "dbPort": "1433",
     "dbName": "order_test",
     "dbUserName": "admin",
