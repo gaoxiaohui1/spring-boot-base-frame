@@ -6,3 +6,4 @@
 ##base_frame_dao    数据库CRUD操作
 ##base_frame_service    服务层（通过注解可切换不同数据源）
 ##base_frame_api    对外接口
+test
