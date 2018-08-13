@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.base.frame</groupId>
+	<artifactId>base_frame</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>base_frame</name>
+	<description>base frame project for Spring Boot</description>
+
+	<modules>
+		<module>base_frame_database</module>
+		<module>base_frame_model</module>
+		<module>base_frame_common</module>
+		<module>base_frame_dao</module>
+		<module>base_frame_aop</module>
+		<module>base_frame_service</module>
+		<module>base_frame_api</module>
+
+	</modules>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.4.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<!--第三方引用-->
+		<druid-spring-boot-starter.version>1.1.10</druid-spring-boot-starter.version>
+		<mssql-jdbc.version>6.4.0.jre8</mssql-jdbc.version>
+		<mybatis-plus-boot-starter.version>2.3</mybatis-plus-boot-starter.version>
+		<logback.ext.version>0.1.5</logback.ext.version>
+		<hystrix-version>1.5.12</hystrix-version>
+		<io.springfox.springfox-swagger2>2.6.1</io.springfox.springfox-swagger2>
+		<io.springfox.springfox-swagger-ui>2.6.1</io.springfox.springfox-swagger-ui>
+		<com.belerweb.pinyin4j>2.5.1</com.belerweb.pinyin4j>
+		<com.squareup.okhttp3>3.10.0</com.squareup.okhttp3>
+		<commons-net.version>3.6</commons-net.version>
+		<com.thoughtworks.xstream>1.4.10</com.thoughtworks.xstream>
+		<com.google.inject.guice>4.2.0</com.google.inject.guice>
+		<com.google.guava>25.0-jre</com.google.guava>
+		<com.google.code.gson>2.8.4</com.google.code.gson>
+		<com.google.zxing>3.3.2</com.google.zxing>
+		<uk.com.robust-it>1.9.9</uk.com.robust-it>
+		<commons-codec>1.11</commons-codec>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>${mybatis-plus-boot-starter.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>tomcat-jdbc</artifactId>
+					<groupId>org.apache.tomcat</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${io.springfox.springfox-swagger2}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>testCompile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

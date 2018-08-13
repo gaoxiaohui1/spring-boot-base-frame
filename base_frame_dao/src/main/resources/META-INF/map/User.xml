@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.base.frame.dao.UserDao">
+    <select id="getUserByID"  parameterType="java.lang.Long"
+            resultType="com.base.frame.model.dto.UserDto">
+        select id,userName,now() AS addTime from UserInfo where id= #{id}
+    </select>
+</mapper>

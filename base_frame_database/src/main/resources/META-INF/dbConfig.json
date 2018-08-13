@@ -1,0 +1,29 @@
+[
+  {
+    "dbSource": "order_Read",
+    "dbType": "sqlserver",
+    "dbAddr": "192.168.11.108",
+    "dbPort": "1433",
+    "dbName": "Fang_Order_Test",
+    "dbUserName": "Fang_Order_Test_r",
+    "dbPw": "HD6dadsq"
+  },
+  {
+    "dbSource": "user_read",
+    "dbType": "mysql",
+    "dbAddr": "127.0.0.1",
+    "dbPort": "3306",
+    "dbName": "user_read",
+    "dbUserName": "admin",
+    "dbPw": "admin"
+  },
+  {
+    "dbSource": "user_write",
+    "dbType": "mysql",
+    "dbAddr": "127.0.0.1",
+    "dbPort": "3306",
+    "dbName": "user_write",
+    "dbUserName": "admin",
+    "dbPw": "admin"
+  }
+]
