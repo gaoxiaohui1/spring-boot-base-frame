@@ -17,7 +17,7 @@ public class DbItem {
      */
     private String dbType;
     /**
-     * 数据库IP（192.168.11.108）
+     * 数据库IP（127.0.0.1）
      */
     private String dbAddr;
     /**
@@ -25,15 +25,15 @@ public class DbItem {
      */
     private String dbPort;
     /**
-     * 数据库名（Fang_Order_Test）
+     * 数据库名（order_test）
      */
     private String dbName;
     /**
-     * 账号（Fang_Order_Test_w）
+     * 账号（admin）
      */
     private String dbUserName;
     /**
-     * 密码（sfAd7sf9）
+     * 密码（admin）
      */
     private String dbPw;
     /**

@@ -2,11 +2,11 @@
   {
     "dbSource": "order_Read",
     "dbType": "sqlserver",
-    "dbAddr": "192.168.11.108",
+    "dbAddr": "127.0.0.1",
     "dbPort": "1433",
-    "dbName": "Fang_Order_Test",
-    "dbUserName": "Fang_Order_Test_r",
-    "dbPw": "HD6dadsq"
+    "dbName": "order_test",
+    "dbUserName": "admin",
+    "dbPw": "admin"
   },
   {
     "dbSource": "user_read",
