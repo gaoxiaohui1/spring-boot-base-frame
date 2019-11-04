@@ -1,5 +1,6 @@
 package com.base.frame.service.user;
 
+import com.base.frame.aop.anation.DbAnation;
 import com.base.frame.aop.anation.UserWriteDbAnation;
 import com.base.frame.dao.UserDao;
 import com.base.frame.model.base.BaseResult;
@@ -26,7 +27,7 @@ public class UserService extends BaseService {
      * @param id
      * @return
      */
-    @UserWriteDbAnation
+    @DbAnation(dbType = "user_write")
     public BaseResult<UserDto> getUserByID(@Min(value = 0, message = "用户ID必须大于0") Long id) {
         UserDto userDto = userDao.getUserByID(id);
         assertNotNull(userDto, "不存在对应信息", true);
@@ -39,6 +40,7 @@ public class UserService extends BaseService {
      * @param name
      * @return
      */
+    @DbAnation(dbType = "user_read")
     public BaseResult<UserDto> getUserByName(@NotNull(message = "用户名不能为空") String name) {
         UserDto userDto = userDao.getUserByName(name);
         assertNotNull(userDto, "不存在对应信息", true);
@@ -62,6 +64,7 @@ public class UserService extends BaseService {
      * @param name
      * @return
      */
+    @DbAnation(dbType = "user_read")
     public BaseResult<Integer> insertUserRead(@NotEmpty(message = "用户名不能为空") String name) {
         return inserUserEntity(name);
     }

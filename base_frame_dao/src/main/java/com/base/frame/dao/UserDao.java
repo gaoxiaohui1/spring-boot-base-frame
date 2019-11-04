@@ -20,6 +20,6 @@ public interface UserDao extends BaseMapper<UserEntity> {
      * @param name
      * @return
      */
-    @Select("select id,userName,now() AS addTime from UserInfo where userName= #{name}")
+    @Select("select id,userName,now() AS addTime from UserInfo where userName= #{name} limit 1")
     UserDto getUserByName(@Param(value = "name") String name);
 }

@@ -62,22 +62,22 @@ public class MailService {
      */
     public void sendSimpleMailAsync(String[] to, String subject, String content) throws Exception {
         log.debug("异步发送简单邮件");
-        try {
-            new Thread() {
-                public void run() {
-                    SimpleMailMessage message = new SimpleMailMessage();
-                    message.setFrom(from);
-                    message.setTo(to);
-                    message.setSubject(subject);
-                    message.setText(content);
-                    sender.send(message);
-                    log.debug("已异步发送简单邮件");
-                }
-            }.start();
-        } catch (Exception e) {
-            log.error("异步发邮件异常");
-            throw new Exception("异步发邮件错误");
-        }
+//        try {
+//            new Thread() {
+//                public void run() {
+//                    SimpleMailMessage message = new SimpleMailMessage();
+//                    message.setFrom(from);
+//                    message.setTo(to);
+//                    message.setSubject(subject);
+//                    message.setText(content);
+//                    sender.send(message);
+//                    log.debug("已异步发送简单邮件");
+//                }
+//            }.start();
+//        } catch (Exception e) {
+//            log.error("异步发邮件异常");
+//            throw new Exception("异步发邮件错误");
+//        }
     }
 
     /**
