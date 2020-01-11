@@ -68,42 +68,42 @@ public class ToolHttp {
 
             //创建/Call
             Call call = okHttpClient.newCall(request);
-            Response response = call.execute();
-            ResponseBody body = response.body();
+            try (Response response = call.execute(); ResponseBody body = response.body()) {
 
-            if (body == null) {
-                throw new HttpException("发送http失败，响应体为空");
+                if (body == null) {
+                    throw new HttpException("发送http失败，响应体为空");
+                }
+
+                final Map<String, String> responseHeaders = Maps.newHashMap();
+                if (httpSend.getNeedReceiveHeaders()) {
+                    final Headers headers = response.headers();
+                    final Set<String> headerNameSet = headers.names();
+                    headerNameSet.forEach(oneHeaderName -> {
+                        final String oneHeaderValue = headers.get(oneHeaderName);
+                        responseHeaders.put(oneHeaderName, oneHeaderValue);
+                    });
+                }
+
+                int responseStatusCode = response.code();
+                if (responseStatusCode != 200) {
+                    log.error("httpcode_error:" + request.url().toString());
+                    throw new HttpException("本次请求响应码不是200，是" + responseStatusCode);
+                }
+
+                String responseBody = body.string();
+                if (log.isDebugEnabled()) {
+                    log.debug(responseBody);
+                }
+                httpReceive.setResponseBody(responseBody)
+                        .setHaveError(false)
+                        .setStatusCode(responseStatusCode)
+                        .setStatusText(responseStatusCode + "")
+                        .setResponseHeader(responseHeaders)
+                ;
+
+                okHttpClient.dispatcher().executorService().shutdown();
+
             }
-
-            final Map<String, String> responseHeaders = Maps.newHashMap();
-            if (httpSend.getNeedReceiveHeaders()) {
-                final Headers headers = response.headers();
-                final Set<String> headerNameSet = headers.names();
-                headerNameSet.forEach(oneHeaderName -> {
-                    final String oneHeaderValue = headers.get(oneHeaderName);
-                    responseHeaders.put(oneHeaderName, oneHeaderValue);
-                });
-            }
-
-            int responseStatusCode = response.code();
-            if (responseStatusCode != 200) {
-                log.error("httpcode_error:"+request.url().toString());
-                throw new HttpException("本次请求响应码不是200，是" + responseStatusCode);
-            }
-
-            String responseBody = body.string();
-            if (log.isDebugEnabled()) {
-                log.debug(responseBody);
-            }
-            httpReceive.setResponseBody(responseBody)
-                    .setHaveError(false)
-                    .setStatusCode(responseStatusCode)
-                    .setStatusText(responseStatusCode + "")
-                    .setResponseHeader(responseHeaders)
-            ;
-
-            response.close();
-            okHttpClient.dispatcher().executorService().shutdown();
         } catch (IOException e) {
             httpReceive.setErrMsg("获取返回内容失败:" + e.getMessage())
                     .setThrowable(e)
