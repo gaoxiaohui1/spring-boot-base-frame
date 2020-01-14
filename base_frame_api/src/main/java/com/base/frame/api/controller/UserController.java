@@ -1,5 +1,6 @@
 package com.base.frame.api.controller;
 
+import com.base.frame.aop.anation.AccessLogAnation;
 import com.base.frame.model.base.BaseResult;
 import com.base.frame.model.dto.UserDto;
 import com.base.frame.service.user.UserService;
@@ -52,6 +53,7 @@ public class UserController {
      * @param name
      * @return
      */
+    @AccessLogAnation
     @ApiOperation(value = "mysql写库插入", notes = "mysql写库插入")
     @RequestMapping(path = "mySqlWriteInsert", method = RequestMethod.GET)
     public BaseResult<Integer> mySqlWriteInsert(String name) {
@@ -65,6 +67,7 @@ public class UserController {
      * @param name
      * @return
      */
+    @AccessLogAnation
     @ApiOperation(value = "mysql读库插入", notes = "mysql读库插入")
     @RequestMapping(path = "mySqlReadInsert", method = RequestMethod.GET)
     public BaseResult<Integer> mySqlReadInsert(String name) {

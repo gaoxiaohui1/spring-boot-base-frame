@@ -1,6 +1,9 @@
 package com.base.frame.aop.aspect;
 
+import com.base.frame.aop.IRecordAccessLog;
+import com.base.frame.aop.anation.AccessLogAnation;
 import com.base.frame.common.tools.data.text.ToolJson;
+import com.base.frame.common.tools.data.text.ToolStr;
 import com.base.frame.common.tools.mail.MailService;
 import com.base.frame.model.base.BaseResult;
 import com.base.frame.model.base.ResultGenerator;
@@ -20,6 +23,7 @@ import org.springframework.util.StopWatch;
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.crypto.Data;
 import java.io.UnsupportedEncodingException;
+import java.lang.annotation.Annotation;
 import java.net.URLDecoder;
 import java.util.Date;
 
@@ -35,6 +39,8 @@ public class ControllerAspect {
     private MailService mailService;
     @Autowired
     private HttpServletRequest httpServletRequest;
+    @Autowired
+    private IRecordAccessLog accessLog;
 
     /**
      * 报警邮件收信人
@@ -71,6 +77,7 @@ public class ControllerAspect {
         stopWatch.stop();
         String content = getRequestInfo(jp, stopWatch.getTotalTimeMillis(), result);
         emailRequestInfo("请求信息", content);
+        insertAccessLog(jp, stopWatch.getTotalTimeMillis(), result);
         return result;
     }
 
@@ -125,6 +132,53 @@ public class ControllerAspect {
             mailService.sendSimpleMailAsync(mailTo.split(","), subject, content);
         } catch (Exception mailEx) {
             log.error("emailRequestInfo发送邮件异常", mailEx);
+        }
+    }
+
+    /**
+     * 是否记录请求信息
+     *
+     * @param jp
+     * @return
+     */
+    private Boolean ifRecordAccessLog(ProceedingJoinPoint jp) {
+        for (Annotation annotation : jp.getSignature().getDeclaringType().getAnnotations()) {
+            if (AccessLogAnation.class.equals(annotation.annotationType())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 数据库记录请求信息
+     *
+     * @param jp
+     * @param runTime
+     * @param result
+     */
+    private void insertAccessLog(ProceedingJoinPoint jp, long runTime, Object result) {
+        try {
+            Boolean ifRecordAccessLog = ifRecordAccessLog(jp);
+            if (ifRecordAccessLog) {
+                String url = httpServletRequest.getScheme().concat("://").concat(httpServletRequest.getServerName()).concat(httpServletRequest.getRequestURI());
+                String headers = "cookie：".concat(ToolStr.isSpace(httpServletRequest.getHeader("Cookie")) ? "" : httpServletRequest.getHeader("Cookie"));
+                String params = ToolStr.isSpace(ToolJson.modelToJson(jp.getArgs())) ? "" : ToolJson.modelToJson(jp.getArgs());
+                if (httpServletRequest.getMethod().equalsIgnoreCase("GET") && httpServletRequest.getQueryString() != null) {
+                    try {
+                        params = URLDecoder.decode(httpServletRequest.getQueryString(), "utf-8");
+                    } catch (UnsupportedEncodingException e) {
+                    }
+                }
+                BaseResult baseResult = (BaseResult) result;
+                accessLog.save(url, headers, params, httpServletRequest.getMethod()
+                        , String.valueOf(baseResult.getCode()), baseResult.getMessage(), ToolJson.modelToJson(result)
+                        , 0L
+                        , ToolStr.isSpace(httpServletRequest.getHeader("Referer")) ? "" : httpServletRequest.getHeader("Referer")
+                        , runTime, new Date());
+            }
+        } catch (Exception e) {
+            log.error("insertAccessLog异常", e);
         }
     }
 }
