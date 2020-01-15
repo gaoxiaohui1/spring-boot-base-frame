@@ -15,8 +15,9 @@ import javax.validation.constraints.NotBlank;
 /**
  * 用户
  */
-@RequestMapping("/api/user")
 @RestController
+@AccessLogAnation
+@RequestMapping("/api/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -53,7 +54,6 @@ public class UserController {
      * @param name
      * @return
      */
-    @AccessLogAnation
     @ApiOperation(value = "mysql写库插入", notes = "mysql写库插入")
     @RequestMapping(path = "mySqlWriteInsert", method = RequestMethod.GET)
     public BaseResult<Integer> mySqlWriteInsert(String name) {
@@ -67,7 +67,6 @@ public class UserController {
      * @param name
      * @return
      */
-    @AccessLogAnation
     @ApiOperation(value = "mysql读库插入", notes = "mysql读库插入")
     @RequestMapping(path = "mySqlReadInsert", method = RequestMethod.GET)
     public BaseResult<Integer> mySqlReadInsert(String name) {
