@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.base.frame.dao.OrderInfoDao">
+    <insert id="insertBatch">
+        INSERT INTO order_info(
+        subOrderNumber
+        ,orderNumber
+        ,historyNumber
+        ,startDate
+        ,endDate
+        ,orderMoney
+        ,productID
+        ,productName
+        ,orderRealMoney
+        ,orderSource
+        )
+        VALUES
+        <foreach collection='list' item='ois' separator=','>
+            (#{ois.subOrderNumber}
+            ,#{ois.orderNumber}
+            ,#{ois.historyNumber}
+            ,#{ois.startDate}
+            ,#{ois.endDate}
+            ,#{ois.orderMoney}
+            ,#{ois.productID}
+            ,#{ois.productName}
+            ,#{ois.orderRealMoney}
+            ,#{ois.orderSource}
+            )
+        </foreach>
+    </insert>
+</mapper>
