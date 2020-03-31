@@ -18,6 +18,12 @@
     <dependencies>
         <dependency>
             <groupId>com.base.frame</groupId>
+            <artifactId>base_frame_rabbitmq</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.base.frame</groupId>
             <artifactId>base_frame_model</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

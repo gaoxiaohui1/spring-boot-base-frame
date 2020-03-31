@@ -35,4 +35,12 @@ public class BaseResult<T> implements Serializable {
      */
     @ApiModelProperty(value = "1-成功；其他失败")
     private T data;
+
+    /**
+     *
+     * @return
+     */
+    public boolean isSuccess() {
+        return this.code.equals(1);
+    }
 }
