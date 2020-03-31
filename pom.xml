@@ -16,6 +16,9 @@
 		<module>base_frame_common</module>
 		<module>base_frame_dao</module>
 		<module>base_frame_aop</module>
+		<module>base_frame_rabbitmq</module>
+		<module>base_frame_consumer</module>
+		<module>base_frame_generator</module>
 		<module>base_frame_service</module>
 		<module>base_frame_api</module>
 
