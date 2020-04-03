@@ -8,4 +8,5 @@ public class MqBaseDto {
     private String queue;
     private String uuid;
     private String qT;
+    private Long ttl;
 }

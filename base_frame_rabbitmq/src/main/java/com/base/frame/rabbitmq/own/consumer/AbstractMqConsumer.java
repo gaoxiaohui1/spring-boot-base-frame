@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * 消息消费抽象基类
+ * @param <T>
+ */
 @Slf4j
 @Component
 public abstract class AbstractMqConsumer<T extends MqBaseDto> {

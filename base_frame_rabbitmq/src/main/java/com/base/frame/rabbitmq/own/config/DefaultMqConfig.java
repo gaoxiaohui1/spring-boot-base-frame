@@ -118,11 +118,48 @@ public class DefaultMqConfig {
         return queue;
     }
 
+
+
+    @Bean
+    public FanoutExchange defaultDeadLetterExchange() {
+        return new FanoutExchange(ConstExchange.DEAD_LETTER_DEFAULT_EXCHANGE);
+    }
+
+    @Bean
+    public Queue delayExecuteQueue() {
+        Queue queue = new Queue(ConstQueue.DELAY_EXECUTE_QUEQUE);
+        fanoutBindingMap.put(queue, defaultDeadLetterExchange());
+        return queue;
+    }
+
+    @Bean
+    public Queue delayMQueue() {
+        Map<String, Object> map = new HashMap<>(5);
+        map.put("x-dead-letter-exchange", ConstExchange.DEAD_LETTER_DEFAULT_EXCHANGE);
+        map.put("x-dead-letter-routing-key", ConstQueue.DELAY_EXECUTE_QUEQUE);
+        Queue queue = new Queue(ConstQueue.DIRECT_DELAY_M_QUEQUE,
+                true, false, false, map);
+        directBindingMap.put(queue, defaultDirectExchange());
+        return queue;
+    }
+
+    @Bean
+    public Queue delayQQueue() {
+        Map<String, Object> map = new HashMap<>(5);
+        map.put("x-message-ttl", 5 * 1000);
+        map.put("x-dead-letter-exchange", ConstExchange.DEAD_LETTER_DEFAULT_EXCHANGE);
+        map.put("x-dead-letter-routing-key", ConstQueue.DELAY_EXECUTE_QUEQUE);
+        Queue queue = new Queue(ConstQueue.DIRECT_DELAY_Q_QUEQUE,
+                true, false, false, map);
+        directBindingMap.put(queue, defaultDirectExchange());
+        return queue;
+    }
+
     @Bean
     public List<Binding> defaultBindings() {
         List<Binding> bindingList = new ArrayList<>();
         directBindingMap.forEach((k, v) -> {
-            bindingList.add(BindingBuilder.bind(k).to(v).withQueueName());
+            bindingList.add(BindingBuilder.bind(k).to(v).with(k.getName()));
         });
         fanoutBindingMap.forEach((k, v) -> {
             bindingList.add(BindingBuilder.bind(k).to(v));

@@ -3,6 +3,10 @@ package com.base.frame.rabbitmq.own.sender;
 import com.base.frame.model.base.MqBaseDto;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ * @param <T>
+ */
 @Component
 public class DefaultDirectSender<T extends MqBaseDto> extends AbstractMqSender {
     @Override

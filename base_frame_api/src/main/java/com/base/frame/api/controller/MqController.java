@@ -41,4 +41,30 @@ public class MqController {
         BaseResult result = mqService.sendMsgToFanout(dto);
         return result;
     }
+
+    /**
+     * 发送延时消息
+     *
+     * @param dto
+     * @return
+     */
+    @ApiOperation(value = "发送延时消息", notes = "发送延时消息")
+    @RequestMapping(path = "sendDelayMsg", method = RequestMethod.GET)
+    public BaseResult sendDelayMsg(QueueMsgDto dto) {
+        BaseResult result = mqService.sendDelayMsg(dto);
+        return result;
+    }
+
+    /**
+     * 发送消息到延时队列
+     *
+     * @param dto
+     * @return
+     */
+    @ApiOperation(value = "发送消息到延时队列", notes = "发送消息到延时队列")
+    @RequestMapping(path = "sendMsgToDelayQueue", method = RequestMethod.GET)
+    public BaseResult sendMsgToDelayQueue(QueueMsgDto dto) {
+        BaseResult result = mqService.sendMsgToDelayQueue(dto);
+        return result;
+    }
 }

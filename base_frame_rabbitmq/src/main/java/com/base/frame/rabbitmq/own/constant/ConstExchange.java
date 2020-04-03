@@ -9,4 +9,8 @@ public class ConstExchange {
      * 默认fanout交换机
      */
     public static final String FANOUT_DEFAULT_EXCHANGE = "order.default.fanout";
+    /**
+     * 默认死信交换机
+     */
+    public static final String DEAD_LETTER_DEFAULT_EXCHANGE = "order.default.deadletter";
 }

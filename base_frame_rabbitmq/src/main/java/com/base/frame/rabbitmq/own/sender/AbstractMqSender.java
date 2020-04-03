@@ -6,6 +6,10 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * 消息发送抽象基类
+ * @param <T>
+ */
 @Component
 public abstract class AbstractMqSender<T extends MqBaseDto> {
     @Autowired
@@ -18,7 +22,14 @@ public abstract class AbstractMqSender<T extends MqBaseDto> {
 
     public void send(T t) {
         beforeSend();
-        rabbitTemplate.convertAndSend(t.getExChange(), t.getQueue(), t);
+        if (null != t.getTtl()) {
+            rabbitTemplate.convertAndSend(t.getExChange(), t.getQueue(), t, message -> {
+                message.getMessageProperties().setExpiration(String.valueOf(t.getTtl()));
+                return message;
+            });
+        } else {
+            rabbitTemplate.convertAndSend(t.getExChange(), t.getQueue(), t);
+        }
         afterSend();
     }
 
