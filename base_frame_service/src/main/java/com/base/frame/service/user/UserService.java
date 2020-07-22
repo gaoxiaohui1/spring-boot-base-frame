@@ -15,6 +15,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class UserService extends BaseService {
@@ -76,5 +77,27 @@ public class UserService extends BaseService {
         Integer effortRow = userDao.insert(userEntity);
         assertEqual(effortRow, 1, "插入异常", false);
         return ResultGenerator.success(new Integer(userEntity.getId().intValue()));
+    }
+
+
+    public void userAsyncVoid() {
+        logger.info(System.currentTimeMillis() + "    user start void");
+        try {
+            TimeUnit.SECONDS.sleep(1L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info(System.currentTimeMillis() + "    user end void");
+    }
+
+    public BaseResult userAsync() {
+        logger.info(System.currentTimeMillis() + "    user start res");
+        try {
+            TimeUnit.SECONDS.sleep(1L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info(System.currentTimeMillis() + "    user end res");
+        return ResultGenerator.success();
     }
 }

@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class OrderService extends BaseService {
@@ -39,5 +40,27 @@ public class OrderService extends BaseService {
         BaseResult<OrderCreateInput> result = ResultGenerator.fail(orderCreateInput, "异常");
         assertResult(result, "创建订单异常", false);
         return result;
+    }
+
+
+    public void orderAsyncVoid() {
+        logger.info(System.currentTimeMillis() + "    order start void");
+        try {
+            TimeUnit.SECONDS.sleep(3L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info(System.currentTimeMillis() + "    order end void");
+    }
+
+    public BaseResult orderAsync() {
+        logger.info(System.currentTimeMillis() + "    order start res");
+        try {
+            TimeUnit.SECONDS.sleep(3L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        logger.info(System.currentTimeMillis() + "    order end res");
+        return ResultGenerator.success();
     }
 }
