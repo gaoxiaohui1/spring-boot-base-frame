@@ -1,5 +1,6 @@
 package com.base.frame.rabbitmq.own.config;
 
+import com.base.frame.common.tools.data.text.ToolJson;
 import com.base.frame.rabbitmq.own.constant.ConstExchange;
 import com.base.frame.rabbitmq.own.constant.ConstQueue;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -73,6 +74,26 @@ public class DefaultMqConfig {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
         rabbitTemplate.setMandatory(mandatory);
         rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter);
+        /**
+         * 当消息发送到交换机（exchange）时，该方法被调用.
+         *      * 1.如果消息没有到exchange,则 ack=false
+         *      * 2.如果消息到达exchange,则 ack=true
+         */
+        rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            if (ack) {
+                System.out.println("消息发送到exchange成功: " + ToolJson.modelToJson(correlationData));
+            } else {
+                System.out.println("消息发送到exchange失败,原因: " + cause);
+            }
+        });
+        /**
+         * 当消息从交换机到队列失败时，该方法被调用。（若成功，则不调用）
+         * 需要注意的是：该方法调用后，MsgSendConfirmCallBack中的confirm方法也会被调用，且ack = true
+         */
+        rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+            System.out.println("消息：{$message.messageProperties.correlationId} 发送失败, 应答码：{$replyCode} 原因：" +
+                    "{$replyText} 交换机: {$exchange}  路由键: {$routingKey}");
+        });
         return rabbitTemplate;
     }
 
@@ -117,7 +138,6 @@ public class DefaultMqConfig {
         fanoutBindingMap.put(queue, defaultFanoutExchange());
         return queue;
     }
-
 
 
     @Bean
