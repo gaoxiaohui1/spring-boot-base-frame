@@ -21,6 +21,7 @@
 		<module>base_frame_generator</module>
 		<module>base_frame_service</module>
 		<module>base_frame_api</module>
+		<module>base_frame_event</module>
 
 	</modules>
 

@@ -52,6 +52,11 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${io.springfox.springfox-swagger-ui}</version>
         </dependency>
+        <dependency>
+            <groupId>com.base.frame</groupId>
+            <artifactId>base_frame_event</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
