@@ -29,11 +29,12 @@ public class BizService {
     }
 
     public void orderCreate(String orderNumber, Integer type) {
-        if (type == 1) {
+        try {
+            Integer doCreate = 10 / type;
             log.info("create-success-event-publish->start->" + orderNumber);
             eventPublishService.orderCreate(orderNumber, true);
             log.info("create-success-event-publish->end->" + orderNumber);
-        } else {
+        } catch (Exception e) {
             log.info("create-fail-event-publish->start->" + orderNumber);
             eventPublishService.orderCreate(orderNumber, false);
             log.info("create-fail-event-publish->end->" + orderNumber);
