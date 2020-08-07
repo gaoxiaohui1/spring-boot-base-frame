@@ -1,0 +1,9 @@
+===APOLLO客户端配置===
+1.需要手动在本地新建以下文件和目录:
+    - 本地环境文件路径C:\opt\settings\server.properties(没有则需要新建)
+        - server.properties中写env=DEV
+    - 本地配置文件夹路径C:\opt\data\(没有则需要新建),本地缓存配置在此文件夹下
+
+2.本地开发模式(脱离APOLLO服务端):
+    - C:\opt\settings\server.properties中写env=LOCAL
+    - 本地缓存文件为:C:\opt\data\fang-order\config-cache\fang-order+default+application.properties
