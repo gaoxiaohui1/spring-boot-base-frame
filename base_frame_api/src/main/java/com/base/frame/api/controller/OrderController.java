@@ -1,5 +1,6 @@
 package com.base.frame.api.controller;
 
+import com.base.frame.aop.anation.AccessLogAnnotation;
 import com.base.frame.model.base.BaseResult;
 import com.base.frame.model.base.ResultGenerator;
 import com.base.frame.model.dto.input.OrderCreateInput;
@@ -57,6 +58,7 @@ public class OrderController {
      * @param orderCreateInput
      * @return
      */
+    @AccessLogAnnotation(name = "复杂参数校验")
     @ApiOperation(value = "复杂参数校验", notes = "复杂参数校验")
     @RequestMapping(path = "validateParamInController", method = RequestMethod.POST)
     public BaseResult<OrderCreateInput> validateParamInController(@RequestBody @Valid OrderCreateInput orderCreateInput, BindingResult bindingResult) {
